@@ -5,14 +5,14 @@ import ShapesButton from './components/ShapesButton';
 import { GeomentrySphere, GeomentryBox, GeomentryCylinder } from './components/Shapes';
 import './App.css';
 
-function renderModel({ shape, position, color }) {
+function renderModel({ shape, position, color, deleteFunction, id }) {
   switch (shape) {
     case 'sphere':
-      return <GeomentrySphere position={position} color={color} />;
+      return <GeomentrySphere position={position} color={color} deleteFunction={deleteFunction} id={id} />;
     case 'box':
-      return <GeomentryBox position={position} color={color} />;
+      return <GeomentryBox position={position} color={color} deleteFunction={deleteFunction} id={id} />;
     default:
-      return <GeomentryCylinder position={position} color={color} />;
+      return <GeomentryCylinder position={position} color={color} deleteFunction={deleteFunction} id={id} />;
   }
 }
 function GeomentryModels(props) {
@@ -22,7 +22,20 @@ function GeomentryModels(props) {
 }
 
 export default function App() {
-  const [geomentryModel, reCalculateModels] = useState([])
+
+  const [geomentryModel, setgeomentryModles] = useState([])
+
+  const deleteModel = (id) => {
+    setgeomentryModles(model => model.filter((geomentryModel, i) => i !== 0));
+    
+    console.log("deleting", id);
+
+  }
+
+
+
+  // const changeTexture = (id) => {
+  // }
 
   return (
     <>
@@ -45,7 +58,7 @@ export default function App() {
         {geomentryModel.map((props) => (
           <GeomentryModels {...props} />
         ))}
-        <GeomentryModels shape="sphere" position={[0, 0, 0]} color="chocolate" />
+        {/* <GeomentryModels shape="sphere" position={[0, 0, 0]} color="chocolate" deleteFunction={deleteModel} id="0" /> */}
         <OrbitControls />
       </Canvas>
     </>
@@ -75,8 +88,20 @@ export default function App() {
     const color = colors[getRandomInt(6)];
     let position = [getRandomInt(-20), getRandomInt(-7), getRandomInt(3) - getRandomInt(5)];
 
-    let newModel = geomentryModel.map((props) => ({ ...props }))
-    newModel.push({ shape: shape, position: position, color: color })
-    reCalculateModels([...newModel])
+    let inc = 0;
+    let newModel = geomentryModel.map((props) => ({ ...props , id:inc++}))
+
+    newModel.push({ shape: shape, position: position, color: color, deleteFunction: deleteModel, id: inc++ })
+    setgeomentryModles([...newModel])
   }
+
+
+
+
 }
+
+
+/**
+ * references for errors
+ * https://stackoverflow.com/questions/59465497/react-hook-usestate-update-state-and-rerender-the-view
+ */

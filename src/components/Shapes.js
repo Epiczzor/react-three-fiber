@@ -2,45 +2,48 @@ import { Box, Sphere, Cylinder } from '@react-three/drei'
 import PropTypes from 'prop-types'
 
 
-const GeomentrySphere = ({ position, args, color }) => {
+const GeomentrySphere = ({ position, args, color, deleteFunction, id }) => {
+    id = parseInt(id);
     return (
-        <Sphere position={position} args={[1, 50]} >
-            <meshBasicMaterial attach="material" color={color}  />
+        <Sphere key={id} position={position} args={[1, 50]} onClick={() => deleteFunction(id)}>
+            {/* onClick={() => deleteFunction(id)} */}
+            {/* onClick={deleteFunction} */}
+            <meshBasicMaterial attach="material" color={color} />
         </Sphere>
     )
 }
 
 
-const GeomentryBox = ({ position, args, color }) => {
+const GeomentryBox = ({ position, args, color, deleteFunction, id }) => {
     return (
-        <Box position={position} >
+        <Box key={id} position={position} onClick={() => deleteFunction(id)}>
             <meshBasicMaterial attach="material" color={color} />
         </Box>
     )
 }
 
 
-const GeomentryCylinder = ({ position, args, color }) => {
+const GeomentryCylinder = ({ position, args, color, deleteFunction, id }) => {
     return (
-        <Cylinder position={position} args={[1, 1, 1, 32]}>
+        <Cylinder key={id} position={position} args={[1, 1, 1, 32]} onClick={() => deleteFunction(id)}>
             <meshBasicMaterial attach="material" color={color} />
         </Cylinder>
     )
 }
 
 // default config
-GeomentrySphere.defaultProps = 
-GeomentryBox.defaultProps = 
-GeomentryCylinder.defaultProps = 
-{
-    color: "black"
-};
+GeomentrySphere.defaultProps =
+    GeomentryBox.defaultProps =
+    GeomentryCylinder.defaultProps =
+    {
+        color: "black"
+    };
 
 GeomentrySphere.propTypes =
-GeomentryBox.propTypes =
-GeomentryCylinder.propTypes =
-{
-    color: PropTypes.string.isRequired,
-};
+    GeomentryBox.propTypes =
+    GeomentryCylinder.propTypes =
+    {
+        color: PropTypes.string.isRequired,
+    };
 
-export  {GeomentrySphere, GeomentryBox, GeomentryCylinder};
+export { GeomentrySphere, GeomentryBox, GeomentryCylinder };
