@@ -104,4 +104,7 @@ export default function App() {
 /**
  * references for errors
  * https://stackoverflow.com/questions/59465497/react-hook-usestate-update-state-and-rerender-the-view
+ * 
+ * bug:
+ * onclicking model delete will not work as expected
  */
